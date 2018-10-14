@@ -54,13 +54,13 @@ int main()
     string colorHorse = ""; // String that receives the horse's color according to the conditions bellow
 
     if(qtdNonZeroDarkBrown > qtdNonZeroWhite && qtdNonZeroDarkBrown > qtdNonZeroLightBrown && qtdNonZeroDarkBrown > qtdNonZeroBlack)
-        colorHorse = "Color's horse: Dark Brown";
+        colorHorse = "Horse's color: Dark Brown";
     else if (qtdNonZeroWhite > qtdNonZeroDarkBrown && qtdNonZeroWhite > qtdNonZeroLightBrown && qtdNonZeroWhite > qtdNonZeroBlack)
-        colorHorse = "Color's horse: White";
+        colorHorse = "Horse's color: White";
     else if (qtdNonZeroBlack > qtdNonZeroDarkBrown && qtdNonZeroBlack > qtdNonZeroLightBrown && qtdNonZeroBlack > qtdNonZeroWhite)
-        colorHorse = "Color's horse: Black";
+        colorHorse = "Horse's color: Black";
     else
-        colorHorse = "Color's horse: Light Brown";
+        colorHorse = "Horse's color: Light Brown";
 
     namedWindow(colorHorse,WINDOW_NORMAL); // Creating a window that in which the name is the colorHorse string
     namedWindow("Image Without Background",WINDOW_NORMAL); // Window that is going to show the image without background
