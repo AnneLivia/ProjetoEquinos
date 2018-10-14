@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1539385172 source:c:\users\annel\downloads\programming\projeto horse\projetohorsecpp\main.cpp
+	<iostream>
+	<opencv2/opencv.hpp>
+
