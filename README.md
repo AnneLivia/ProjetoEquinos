@@ -11,7 +11,7 @@ O programa no momento se encontra em três etapas:
 2. Implementação de técnicas para identificação da coloração presente na pelagem dos equinos
     * A identificação está sendo feita utilizando o sistema HSV.
 3. Implementação de métodos para classificação de pelagens
-    * Estão sendo feito testes para classificação de duas pelagens, Alazã e Castanho
+    * Estão sendo feitos testes para classificação de duas pelagens, Alazã e Castanho
     * Estão sendo analisados no momento a cor predominante no equino como um todo e em parte dos membros.
     * OBS: Caso seja utilizado cavalos de pelagem composta ou conjugada, o sistema pode se equivocar na classificação.
 ## Pré-requisitos
