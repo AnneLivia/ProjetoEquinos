@@ -1,4 +1,4 @@
-# Utilização de técnicas de processamento digital de imagens para classificação equinos
+# Sistema para identificação automática de pelagens e particularidades dos equinos utilizando técnicas de processamento digital de imagens, inteligência artificial e visão computacional.
 
 ## Introdução
 
@@ -21,3 +21,6 @@ O desenvolvimento está sendo realizado no ambiente de desenvolvimento CodeBlock
 ### Bibliotecas e Linguagens de programação
 * C++
 * Biblioteca OpenCV 3.4.1
+
+## Desenvolvedora
+Anne Livia da F. Macedo (UFPA - Castanhal)
