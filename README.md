@@ -2,7 +2,7 @@
 
 ## Introdução
 
-Projeto em desenvolvimento para classificação de equinos pelos padrões de pelagens, utilizando técnicas de processamento digital de imagens.
+Projeto em desenvolvimento para classificação automática de equinos através da análise dos padrões de pelagens, utilizando técnicas de processamento digital de imagens e visão computacional para o aprimoramento e extração das informações presentes nos objetos (foreground) das imagens digitais.
 
 ## Desenvolvimento
 O programa no momento se encontra em três etapas:
