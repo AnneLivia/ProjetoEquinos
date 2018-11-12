@@ -27,7 +27,7 @@ void detectCoat(float percentageWhite, float percentageBlack, float percentageBr
 
 int main()
 {
-    for(int i = 1; i <= 129; i++) {
+    for(int i = 3; i <= 129; i++) {
     cout << "i = " << i << endl;
     Mat im = imread("images/horse"+to_string(i)+".jpg",CV_LOAD_IMAGE_COLOR);
     //Mat im = imread("images/horse43.jpg",CV_LOAD_IMAGE_COLOR);
