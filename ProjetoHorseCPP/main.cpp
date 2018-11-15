@@ -7,14 +7,14 @@ using namespace cv;
 
 /*
     Using HSV - Hue, saturation and value
-    Where, Version 1:
-        For dark brown: H: 2..15, 110..180, 80..255
-        for Light Brown: H: 15..20, 80..190, 110..255
+    Version 1:
+        For dark: H: 2..15, 110..180, 80..255
+        for Light: H: 15..20, 80..190, 110..255
         for Black: H: 0..150, S: 30..100, V: 10..100
         for White: H: 0..180, S: 0..30, V: 100..255
     Version 2:
-    inRange(hsvImage, Scalar(2,118,60), Scalar(14, 255, 190), hsvdarkBrown);
-    inRange(hsvImage, Scalar(12,31,191), Scalar(20, 255, 255), hsvlightBrown);
+    inRange(hsvImage, Scalar(2,118,60), Scalar(14, 255, 190), hsvdark);
+    inRange(hsvImage, Scalar(12,31,191), Scalar(20, 255, 255), hsvlight);
     inRange(hsvImage, Scalar(0,0,101), Scalar(180, 30, 255), hsvwhite);
     inRange(hsvImage, Scalar(0,0,10), Scalar(180, 117, 100), hsvblack);
 */
@@ -36,25 +36,22 @@ int main()
     // Removing background
     remove_background(im,imWithoutBackground);
 
-    // Variables that are going to store the number of pixels that were found in a specific boundary for each color
+    // Variables to store the number of pixels found in a specific boundary for each color
     int qtdNonZeroWhite, qtdNonZeroBrown, qtdNonZeroLight, qtdNonZeroBlack;
 
-    // Detecting color based on a range of value
+    // Detecting color
     detectColor(imWithoutBackground, qtdNonZeroWhite, qtdNonZeroBrown, qtdNonZeroLight, qtdNonZeroBlack); // passing the image without background and the variables that are going to store the amount of pixels founded
 
-    // String that receives the horse's predominant color
+    // Detecting predominant color (Entire Body)
     string horsePredominantColor;
-    // Detecting what is the predominant color
     predominantColor(horsePredominantColor, qtdNonZeroWhite, qtdNonZeroBrown, qtdNonZeroLight, qtdNonZeroBlack);
 
-    // String that receives the horse's leg color
+    // Detecting predominant color (Horse's legs)
     string horseLegColor;
-    // Check if there is at least one black leg when the predominant color is not black
-    bool hasABlackleg = false;
-    // Detecting leg color
+    bool hasABlackleg = false; // Boolean variable used to verify if at least one of the legs is of color black, although predominant color may not be black.
     detectLegColor(im, horseLegColor, hasABlackleg);
 
-    // Calculating and storing percentage of each color
+    // Calculating percentage of each color (Entire body)
     float percentageBlack, percentageWhite, percentageBrown, percentageLight, total;
 
     total = qtdNonZeroBlack + qtdNonZeroBrown + qtdNonZeroLight + qtdNonZeroWhite;
@@ -64,12 +61,11 @@ int main()
     percentageWhite = (qtdNonZeroWhite / total) * 100;
     percentageLight = (qtdNonZeroLight / total) * 100;
 
-    // String to store horse's coat
+    // Detecting equine coats
     string horseCoat;
-    // Detecting horse's coat
     detectCoat(percentageWhite, percentageBlack, percentageBrown, percentageLight, horsePredominantColor, horseCoat, horseLegColor, hasABlackleg);
 
-    // To show on the screen a float number with 2 numbers after the decimal point.
+
     cout.precision(2);
     cout.setf(ios::fixed);
 
@@ -83,15 +79,13 @@ int main()
     //cout << "Horse's Leg Color: " << horseLegColor << endl;
     cout << "Horse's Coat: " << horseCoat << endl;
 
-    // Creating and resizing widows to show original image and image without background
     namedWindow("Horse", WINDOW_NORMAL);
     namedWindow("Image Without Background", WINDOW_NORMAL);
     resizeWindow("Horse", 500,400);
     resizeWindow("Image Without Background",500,400);
 
-    // showing images
-    imshow("Horse",im); // showing original image
-    imshow("Image Without Background",imWithoutBackground); // Showing image without background
+    imshow("Horse",im);
+    imshow("Image Without Background",imWithoutBackground);
 
     waitKey();
     system("cls");
@@ -103,20 +97,21 @@ int main()
 
 void detectColor(Mat& imagein, int& qtdNonZeroWhite, int& qtdNonZeroBrown, int& qtdNonZeroLight, int& qtdNonZeroBlack) {
 
-    Mat imLight, imBrown, imWhite, imBlack; // Variables to store the result of the bellow function
+    // Variables to store binary image of each color
+    Mat imLight, imBrown, imWhite, imBlack;
 
     // Converting image from RGB to HSV
     Mat hsvImage;
     cvtColor(imagein, hsvImage, CV_BGR2HSV);
 
-    // Checks if array elements lie between the elements of two other arrays (upper bound and lower bound).
-    inRange(hsvImage, Scalar(2,118,60), Scalar(14, 255, 190), imBrown); // Dark Brown
-    inRange(hsvImage, Scalar(12,31,191), Scalar(20, 255, 255), imLight); // Light Brown
+    // Check if array elements lie between the elements of two other arrays (upper bound and lower bound).
+    inRange(hsvImage, Scalar(2,118,60), Scalar(14, 255, 190), imBrown); // Brown (red)
+    inRange(hsvImage, Scalar(12,31,191), Scalar(20, 255, 255), imLight); // Light
     inRange(hsvImage, Scalar(0,0,101), Scalar(180, 30, 255), imWhite); // White
     inRange(hsvImage, Scalar(0,0,10), Scalar(180, 117, 100), imBlack); // Black
 
 
-    // Getting the amount of non black pixels to check how many were found from each color
+    // Amount of non black pixels
     qtdNonZeroWhite = countNonZero(imWhite);
     qtdNonZeroBrown = countNonZero(imBrown);
     qtdNonZeroLight = countNonZero(imLight);
@@ -128,26 +123,24 @@ void detectColor(Mat& imagein, int& qtdNonZeroWhite, int& qtdNonZeroBrown, int& 
 void remove_background(Mat& imagein, Mat& imageOut) {
     Mat gray, threshImage, maskInv;
 
-    int threshold_value = 238; // Threshold to check
-    int const max_BINARY_value = 255; // Where the value is above the thresh "threshold_value", this value will be replace in its respective pixel
+    int threshold_value = 238;
+    int const max_BINARY_value = 255; // White
     // int threshold_type = 1;
 
-    // Convert the image to Gray
+    // Converting from RGB to Gray
     cvtColor(imagein, gray, COLOR_BGR2GRAY);
 
-    // Remove noise using non local means
+    // Removing noise with non local means
     fastNlMeansDenoising(gray, gray, 25);
 
-    // Create Threshold
+    // Thresholding image
     threshold( gray, threshImage, threshold_value, max_BINARY_value,THRESH_BINARY);
 
-    // Erode image (Morphological Operation)
-    Mat kernel = Mat::ones(Size(6,6), CV_8U); // Kernel to do the morphological operation
-
-    // Invert Threshold
+    // Inverting Thresholded image (changing 0 to 1, and vice versa)
     bitwise_not(threshImage, maskInv);
 
-    // Applying erosion to remove border around horse
+    // (Morphological Operation) Kernel (Structuring element) - Applying erosion to remove border around horse
+    Mat kernel = Mat::ones(Size(6,6), CV_8U);
     erode(maskInv, maskInv, kernel);
 
     // Crop
@@ -176,40 +169,38 @@ void predominantColor(string& horsePredominantColor, int qtdNonZeroWhite, int qt
 // *********************************************************************************************************************************
 
 void detectLegColor(Mat& image, string& horseLegColor, bool& hasABlackLeg) {
-    // getting only the legs of the horse, using ROI (Region of Interest) technique
+    // ROI (Region of Interest) - legs of the horse
     Mat legsHorseROI = image(Range(image.rows / 1.3, image.rows), Range(image.cols / 10, image.cols));
 
-    // LegsHorse to store image without background
-    Mat legsHorseROIWithoutBackground;
-
     // Removing background
+    Mat legsHorseROIWithoutBackground;
     remove_background(legsHorseROI, legsHorseROIWithoutBackground);
 
-    // Variable to store amount of pixels founded for each color
+    // Variables to store the number of pixels found in a specific boundary for each color
     int qtdNonZeroWhite, qtdNonZeroBrown, qtdNonZeroLight, qtdNonZeroBlack;
 
     // Detecting colors
     detectColor(legsHorseROIWithoutBackground, qtdNonZeroWhite, qtdNonZeroBrown, qtdNonZeroLight, qtdNonZeroBlack);
 
-    // Checking predominant color from the horse's legs
+    // Predominant color (Horse's legs)
     predominantColor(horseLegColor, qtdNonZeroWhite, qtdNonZeroBrown, qtdNonZeroLight, qtdNonZeroBlack);
 
-    // Calculating percentage of each color
+    // Calculating percentage of brown and black
     float total, percentageBlack, percentageBrown;
     total = qtdNonZeroBlack + qtdNonZeroBrown + qtdNonZeroLight + qtdNonZeroWhite;
     percentageBlack = (qtdNonZeroBlack  / total) * 100;
     percentageBrown = (qtdNonZeroBrown / total ) * 100;
 
-    // true if there's possibly a black leg, although the predominant color is other
+    // true if there's possibly at least one black leg
     hasABlackLeg = (percentageBlack >= percentageBrown && percentageBlack >= 20.00);
 }
 
 // *********************************************************************************************************************************
 
 void detectCoat(float percentageWhite, float percentageBlack, float percentageBrown, float percentageLight, string horsePredominantColor, string& horseCoat, string horseLegColor, bool hasABlackLeg) {
-    // if predominant color is brown or Color is black, which means that the predominant color is black, but, more than 20 percentage is dark brown, ( In almost all black Horses the percentage of brown is less than 16 percent).
+    // if predominant color is brown or Color is black, but, more than 20 percentage is brown, ( In almost all black Horses the percentage of brown is less than 16 percent).
     if(horsePredominantColor == "Brown" || (horsePredominantColor == "Black" && percentageBrown >= 20.00)) {
-        // if horse's leg is black, it means that it maybe has a black mane, tail, etc. (Sometimes, other color like white can be predominant on the leg, so the algorithm must check if there's at least one leg black
+        // if horse's leg is black or there's at least one leg black
         if((horseLegColor == "Black") || (horseLegColor != "Black" && hasABlackLeg)) {
             horseCoat = "Castanho";
         } else {
