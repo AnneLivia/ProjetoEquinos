@@ -1,8 +1,8 @@
-# Sistema para identificação automática de pelagens e particularidades dos equinos utilizando técnicas de processamento digital de imagens, inteligência artificial e visão computacional.
+# Sistema para identificação automática de pelagens dos equinos utilizando técnicas de processamento digital de imagens e visão computacional.
 
 ## Introdução
 
-Projeto em desenvolvimento para classificação automática de equinos através da análise dos padrões de pelagens, utilizando técnicas de processamento digital de imagens e visão computacional para o aprimoramento e extração das informações presentes nos objetos (foreground) das imagens digitais.
+Projeto em desenvolvimento para classificação automática de equinos através da análise dos padrões de pelagens, utilizando técnicas de processamento digital de imagens e visão computacional para o aprimoramento e extração das informações
 
 ## Desenvolvimento
 O programa no momento se encontra em três etapas:

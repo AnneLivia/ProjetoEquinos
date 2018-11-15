@@ -84,13 +84,13 @@ int main()
     cout << "Horse's Coat: " << horseCoat << endl;
 
     // Creating and resizing widows to show original image and image without background
-    namedWindow(horsePredominantColor, WINDOW_NORMAL);
+    namedWindow("Horse", WINDOW_NORMAL);
     namedWindow("Image Without Background", WINDOW_NORMAL);
-    resizeWindow(horsePredominantColor, 500,400);
+    resizeWindow("Horse", 500,400);
     resizeWindow("Image Without Background",500,400);
 
     // showing images
-    imshow(horsePredominantColor,im); // showing original image
+    imshow("Horse",im); // showing original image
     imshow("Image Without Background",imWithoutBackground); // Showing image without background
 
     waitKey();
