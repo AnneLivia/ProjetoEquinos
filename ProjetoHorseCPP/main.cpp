@@ -70,7 +70,7 @@ int main()
     cout.setf(ios::fixed);
 
     cout << "Porcentagem de cada cor: " << endl;
-    cout << "Dark Brown: " << percentageBrown << "%" << endl;
+    cout << "Brown: " << percentageBrown << "%" << endl;
     cout << "White: " << percentageWhite << "%" << endl;
     cout << "Light: " << percentageLight << "%" << endl;
     cout << "Black: " << percentageBlack << "%" << endl;
