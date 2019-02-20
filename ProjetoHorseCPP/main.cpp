@@ -27,10 +27,10 @@ void detectCoat(float percentageWhite, float percentageBlack, float percentageBr
 
 int main()
 {
-    for(int i = 1; i <= 123; i++) {
+    for(int i = 1; i <= 86; i++) {
     cout << "i = " << i << endl;
-    Mat im = imread("images/horse"+to_string(i)+".jpg",CV_LOAD_IMAGE_COLOR);
-    //Mat im = imread("images/horse43.jpg",CV_LOAD_IMAGE_COLOR);
+    Mat im = imread("images/horse"+to_string(i)+".jpg",IMREAD_COLOR);
+    //Mat im = imread("images/horse23.jpg",IMREAD_COLOR);
     Mat imWithoutBackground; // Variable that receives the image without background
 
     // Removing background
@@ -76,7 +76,7 @@ int main()
     cout << "Black: " << percentageBlack << "%" << endl;
 
     cout << "\n\nPredominant Color: " << horsePredominantColor << endl;
-    //cout << "Horse's Leg Color: " << horseLegColor << endl;
+    cout << "Horse's Leg Color: " << horseLegColor << endl;
     cout << "Horse's Coat: " << horseCoat << endl;
 
     namedWindow("Horse", WINDOW_NORMAL);
@@ -102,14 +102,13 @@ void detectColor(Mat& imagein, int& qtdNonZeroWhite, int& qtdNonZeroBrown, int& 
 
     // Converting image from RGB to HSV
     Mat hsvImage;
-    cvtColor(imagein, hsvImage, CV_BGR2HSV);
+    cvtColor(imagein, hsvImage, COLOR_BGR2HSV);
 
     // Check if array elements lie between the elements of two other arrays (upper bound and lower bound).
     inRange(hsvImage, Scalar(2,118,60), Scalar(14, 255, 190), imBrown); // Brown (red)
     inRange(hsvImage, Scalar(12,31,191), Scalar(20, 255, 255), imLight); // Light
     inRange(hsvImage, Scalar(0,0,101), Scalar(180, 30, 255), imWhite); // White
     inRange(hsvImage, Scalar(0,0,10), Scalar(180, 117, 100), imBlack); // Black
-
 
     // Amount of non black pixels
     qtdNonZeroWhite = countNonZero(imWhite);
