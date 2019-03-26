@@ -20,7 +20,7 @@ O desenvolvimento está sendo realizado no ambiente de desenvolvimento CodeBlock
 
 ### Bibliotecas e Linguagens de programação
 * C++
-* Biblioteca OpenCV 3.4.1
+* Biblioteca OpenCV 4.0.1
 
 ## Desenvolvedora
 Anne Livia da F. Macedo (UFPA - Castanhal)
