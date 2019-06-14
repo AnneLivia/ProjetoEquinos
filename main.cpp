@@ -27,7 +27,7 @@ void detectCoat(float percentageWhite, float percentageBlack, float percentageBr
 
 int main()
 {
-    for(int i = 1; i <= 86; i++) {
+    for(int i = 87; i <= 92; i++) {
     cout << "i = " << i << endl;
     Mat im = imread("images/horse"+to_string(i)+".jpg",IMREAD_COLOR);
     //Mat im = imread("images/horse23.jpg",IMREAD_COLOR);
@@ -81,8 +81,8 @@ int main()
 
     namedWindow("Horse", WINDOW_NORMAL);
     namedWindow("Image Without Background", WINDOW_NORMAL);
-    resizeWindow("Horse", 500,400);
-    resizeWindow("Image Without Background",500,400);
+    resizeWindow("Horse", 300,200);
+    resizeWindow("Image Without Background",300,200);
 
     imshow("Horse",im);
     imshow("Image Without Background",imWithoutBackground);
